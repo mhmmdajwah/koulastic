@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('finance', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->decimal('total_income', 15, 2)->default(0);
+            $table->decimal('total_expense', 15, 2)->default(0);
+            $table->decimal('balance', 15, 2)->default(0);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('finance');
     }
 };
