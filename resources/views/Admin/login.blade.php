@@ -13,7 +13,7 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body style="background-image: url('{{ asset('img/header-bg.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<body style="background-image: url('{{ asset('img/login-img.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
