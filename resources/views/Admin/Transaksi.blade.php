@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">List Booking</h1>
+        <h1 class="mt-4">List Keungan Masuk</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Booking</li>
+            <li class="breadcrumb-item active">Keungan Masuk</li>
         </ol>
 
         <div class="card mb-4">

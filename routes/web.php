@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking-edit/{id}', [BookingController::class, 'edit'])->name('booking.edit');
     Route::put('/booking-update/{id}', [BookingController::class, 'update'])->name('booking.update');
     Route::get('/booking-destroy/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
+    Route::put('/booking/bayar-sisa/{id}', [BookingController::class, 'bayarSisa'])->name('booking.bayar_sisa');
 
     Route::get('/transaksi', [TransactionController::class, 'index'])->name('transaksi.index');
     Route::post('/transaksi-store', [TransactionController::class, 'store'])->name('transaksi.store');

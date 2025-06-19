@@ -15,5 +15,14 @@ class Booking extends Model
         'event_date',
         'location',
         'status',
+        'phone_number',
+        'booking_detail',
+        'price',
+        'down_payment',
+        'payment_method',
+        'payment_date',
+        'notes',
+        'payment_status',
+        'payment_balance',
     ];
 }
