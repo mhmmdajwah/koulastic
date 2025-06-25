@@ -75,10 +75,8 @@
                                 </a>
                                 <a class="nav-link" href="{{ route('keungan.index') }}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-dollar-sign"></i></div>
-                                    Catat Keungan
+                                    Transaksi Keluar
                                 </a>
-                               
-                                
                             </nav>
                         </div>
                     </div>

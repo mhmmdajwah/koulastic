@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->decimal('amount', 15, 2);
             $table->enum('payment_method', ['cash', 'transfer', 'ewallet'])->default('cash');
-            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->string('status', 100)->nullable();
             $table->date('payment_date')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();

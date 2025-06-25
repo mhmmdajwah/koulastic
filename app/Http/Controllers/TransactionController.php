@@ -10,10 +10,27 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::all();
+        $usedBookingIds = Transaction::pluck('booking_id');
+
+        $bookings = Booking::whereNotIn('id', $usedBookingIds)->get();
+
         $transaksi = Transaction::with('booking')->get();
-        return view('Admin.Transaksi', compact('transaksi', 'bookings'));
+
+        $bookingData = $bookings->mapWithKeys(function ($b) {
+            return [
+                $b->id => [
+                    'amount' => $b->down_payment ?? 0,
+                    'payment_method' => $b->payment_method ?? '',
+                    'status' => $b->payment_status ?? '',
+                    'payment_date' => $b->payment_date ?? '',
+                ]
+            ];
+        });
+
+        return view('Admin.Transaksi', compact('transaksi', 'bookings', 'bookingData'));
     }
+
+
 
     public function store(Request $request)
     {
@@ -21,7 +38,7 @@ class TransactionController extends Controller
             'booking_id'      => 'required|exists:bookings,id',
             'amount'          => 'required|numeric|min:0',
             'payment_method'  => 'required|string|in:cash,transfer,credit_card,debit_card',
-            'status'          => 'required|string|in:paid,unpaid',
+            'status'          => 'required|string',
             'payment_date'    => 'required|date',
             'note'            => 'nullable|string|max:500',
         ], [
@@ -38,7 +55,6 @@ class TransactionController extends Controller
 
             'status.required'         => 'Status pembayaran harus dipilih.',
             'status.string'           => 'Status pembayaran tidak valid.',
-            'status.in'               => 'Status pembayaran harus antara Paid atau Unpaid.',
 
             'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
             'payment_date.date'       => 'Tanggal pembayaran tidak valid.',

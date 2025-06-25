@@ -45,15 +45,14 @@
                 <table id="datatablesSimple" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Nama Klien</th> {{-- dari booking --}}
-                            <th>Nama Acara</th> {{-- dari booking --}}
-                            <th>Tanggal Acara</th> {{-- dari booking --}}
-                            <th>Lokasi</th> {{-- dari booking --}}
-                            <th>Jumlah</th> {{-- dari transaksi --}}
-                            <th>Metode Pembayaran</th> {{-- dari transaksi --}}
-                            <th>Status</th> {{-- status transaksi (paid/unpaid) --}}
-                            <th>Tanggal Pembayaran</th> {{-- payment_date --}}
-                            <th>Catatan</th> {{-- note --}}
+                            <th>Nama Klien</th>
+                            <th>Nama Acara</th>
+                            <th>Tanggal Acara</th>
+                            <th>Jumlah</th>
+                            <th>Metode Pembayaran</th>
+                            <th>Status</th>
+                            <th>Tanggal Pembayaran</th>
+                            <th>Catatan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -64,7 +63,6 @@
                                 <td>{{ $item->booking->event_name ?? '-' }}</td>
                                 <td>{{ $item->booking->event_date ? \Carbon\Carbon::parse($item->booking->event_date)->format('d M Y') : '-' }}
                                 </td>
-                                <td>{{ $item->booking->location ?? '-' }}</td>
                                 <td>Rp {{ number_format($item->amount, 0, ',', '.') }}</td>
                                 <td>{{ ucfirst($item->payment_method) }}</td>
                                 <td>
@@ -81,9 +79,11 @@
                                 </td>
                                 <td>{{ $item->note ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('transaksi.edit', $item->id) }}"
+                                        class="btn btn-sm btn-warning">Edit</a>
 
-                                    <form action="{{ route('transaksi.delete', $item->id) }}" method="POST" style="display:inline"
+                                    <form action="{{ route('transaksi.delete', $item->id) }}" method="POST"
+                                        style="display:inline"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                         @csrf
                                         @method('DELETE')
@@ -94,7 +94,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
@@ -127,13 +126,13 @@
 
                             <div class="col-md-6">
                                 <label for="amount" class="form-label">Jumlah Pembayaran</label>
-                                <input type="number" name="amount" id="amount" class="form-control" required
-                                    min="0" step="1000" placeholder="Masukkan jumlah pembayaran">
+                                <input type="number" name="amount" id="amount" class="form-control" min="0"
+                                    step="1000" placeholder="Masukkan jumlah pembayaran">
                             </div>
 
                             <div class="col-md-6">
                                 <label for="payment_method" class="form-label">Metode Pembayaran</label>
-                                <select name="payment_method" id="payment_method" class="form-control" required>
+                                <select name="payment_method" id="payment_method" class="form-control">
                                     <option value="" selected disabled>-- Pilih Metode --</option>
                                     <option value="cash">Cash</option>
                                     <option value="transfer">Transfer</option>
@@ -144,16 +143,15 @@
 
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status Pembayaran</label>
-                                <select name="status" id="status" class="form-control" required>
-                                    <option value="paid">Paid</option>
-                                    <option value="unpaid">Unpaid</option>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="belum lunas">Belum Lunas</option>
+                                    <option value="lunas">Lunas</option>
                                 </select>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="payment_date" class="form-label">Tanggal Pembayaran</label>
-                                <input type="date" name="payment_date" id="payment_date" class="form-control"
-                                    required>
+                                <input type="date" name="payment_date" id="payment_date" class="form-control">
                             </div>
 
                             <div class="col-md-6">
@@ -172,6 +170,36 @@
             </form>
         </div>
     </div>
-
-
 @endsection
+
+<script>
+    const bookingData = @json($bookingData);
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingSelect = document.getElementById('booking_id');
+        const amountInput = document.getElementById('amount');
+        const methodSelect = document.getElementById('payment_method');
+        const statusSelect = document.getElementById('status');
+        const dateInput = document.getElementById('payment_date');
+
+        if (bookingSelect) {
+            bookingSelect.addEventListener('change', function() {
+                const bookingId = this.value;
+                const data = bookingData[bookingId];
+
+                if (data) {
+                    amountInput.value = data.amount ?? '';
+                    methodSelect.value = data.payment_method ?? '';
+                    statusSelect.value = data.status ?? '';
+                    dateInput.value = data.payment_date ?? '';
+                } else {
+                    amountInput.value = '';
+                    methodSelect.value = '';
+                    statusSelect.value = '';
+                    dateInput.value = '';
+                }
+            });
+        }
+    });
+</script>
