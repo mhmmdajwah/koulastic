@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('finance', function (Blueprint $table) {
+        Schema::create('acara', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_income', 15, 2)->default(0);
-            $table->decimal('total_expense', 15, 2)->default(0);
-            $table->decimal('balance', 15, 2)->default(0);
-            $table->text('notes')->nullable();
+            $table->string('nama_acara');
+            $table->string('lokasi');
+            $table->integer('harga');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
+            $table->boolean('status')->default(true);
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('finance');
+        Schema::dropIfExists('acara');
     }
 };

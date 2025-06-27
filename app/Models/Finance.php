@@ -9,25 +9,23 @@ class Finance extends Model
 {
     use HasFactory;
 
-     protected $table = 'finance'; 
+    protected $table = 'finance';
 
     protected $fillable = [
-        'total_income',
         'total_expense',
-        'balance',
         'notes',
     ];
 
-     protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($finance) {
-            $finance->balance = $finance->total_income - $finance->total_expense;
-        });
+        // static::creating(function ($finance) {
+        //     $finance->balance = $finance->total_income - $finance->total_expense;
+        // });
 
-        static::updating(function ($finance) {
-            $finance->balance = $finance->total_income - $finance->total_expense;
-        });
+        // static::updating(function ($finance) {
+        //     $finance->balance = $finance->total_income - $finance->total_expense;
+        // });
     }
 }

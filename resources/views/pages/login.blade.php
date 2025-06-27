@@ -10,10 +10,11 @@
     <title>Login - Koulastic</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('ole/css/styles.css') }}" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
 </head>
 
-<body style="background-image: url('{{ asset('img/login-img.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<body
+    style="background-image: url('{{ asset('img/login-img.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -39,7 +40,7 @@
                                         @endif
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="text"
-                                                placeholder="username" name="username"/>
+                                                placeholder="username" name="username" />
                                             <label for="username">Username</label>
                                         </div>
                                         <div class="form-floating mb-3">
@@ -73,7 +74,7 @@
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{ asset('ole/js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -81,7 +82,7 @@
     <script src="{{ asset('ole/assets/demo/chart-bar-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
-    <script src="{{ asset('ole/js/datatables-simple-demo.js') }}"></script>
+    <script src="{{ asset('ole/js/datatables-simple-demo.js') }}"></script> --}}
 </body>
 
 </html>

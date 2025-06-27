@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Acara;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,9 +18,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        // Membuat user admin
+        User::create([
+            'username' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password123')
+        ]);
+
+        // Membuat acara
+        // Acara::create([
+        //     'nama_acara' => 'Seminar Wisuda',
+        //     'lokasi' => 'Gedung Serba Guna',
+        //     'harga' => 100000,
+        //     'tanggal_mulai' => '2023-06-01',
+        //     'tanggal_selesai' => '2023-06-02',
+        //     'status' => true,
+        //     'catatan' => 'Catatan acara'
         // ]);
     }
 }

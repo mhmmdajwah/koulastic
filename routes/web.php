@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransaksiKeluarController;
+use App\Http\Controllers\TransaksiMasukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,24 +30,17 @@ Route::post('/login-progress', [AuthController::class, 'progress'])->name('login
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Halaman Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
-    Route::post('/booking-store', [BookingController::class, 'store'])->name('booking.store');
-    Route::get('/booking-edit/{id}', [BookingController::class, 'edit'])->name('booking.edit');
-    Route::put('/booking-update/{id}', [BookingController::class, 'update'])->name('booking.update');
-    Route::get('/booking-destroy/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
-    Route::put('/booking/bayar-sisa/{id}', [BookingController::class, 'bayarSisa'])->name('booking.bayar_sisa');
+    Route::resource('/pemesanan', PemesananController::class);
+    Route::post('/pemesanan/{id}/sisa-bayar/', [PemesananController::class, 'sisaBayar'])
+        ->name('pemesanan.sisa-bayar');
 
-    Route::get('/transaksi', [TransactionController::class, 'index'])->name('transaksi.index');
-    Route::post('/transaksi-store', [TransactionController::class, 'store'])->name('transaksi.store');
-    Route::get('/transaksi-edit/{id}', [TransactionController::class, 'edit'])->name('transaksi.edit');
-    Route::put('/transaksi-update/{id}', [TransactionController::class, 'update'])->name('transaksi.update');
-    Route::delete('/transaksi-delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi.delete');
+    Route::resource('/acara', AcaraController::class);
 
-    Route::get('/keungan', [FinanceController::class, 'index'])->name('keungan.index');    
-    Route::post('/keungan-store', [FinanceController::class, 'store'])->name('keungan.store'); 
-    Route::get('/keungan-edit/{id}', [FinanceController::class, 'edit'])->name('keungan.edit');
-    Route::put('/keungan-update/{id}', [FinanceController::class, 'update'])->name('keungan.update');
-    Route::delete('/keungan-delete/{id}', [FinanceController::class, 'destroy'])->name('keungan.delete');
+    Route::resource('/transaksi-masuk', TransaksiMasukController::class);
+
+    Route::resource('/transaksi-keluar', TransaksiKeluarController::class);
 });

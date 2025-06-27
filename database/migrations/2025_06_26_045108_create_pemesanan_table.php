@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('pemesanan', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name', 300);
-            $table->string('event_name', 599)->nullable();
-            $table->date('event_date')->nullable();
-            $table->string('location')->nullable();
-            $table->string('status')->nullable();
+            $table->foreignId('acara_id');
+            $table->string('nama_pemesan');
+            $table->string('nomor_telepon');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('pemesanan');
     }
 };
