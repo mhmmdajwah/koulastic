@@ -99,7 +99,7 @@
                                              {{ $pemesanan->getSisaPembayaran() }}
                                              )">
                                                 {{-- Ketika tombol sisa bayar diklik menuju ke script fungsi bayarSisa() --}}
-                                                <i class='bx  bxs-wallet-note'></i>
+                                                <i class='bx bxs-wallet-note'></i>
                                                 Bayar Sisa
                                             </button>
                                         @endif
@@ -217,7 +217,7 @@
     <div class="modal fade" id="bayarSisaModal" tabindex="-1" aria-labelledby="bayarSisaModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <form action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST">
+            <form id="bayarSisaForm" action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -276,15 +276,25 @@
     </div>
 
     <script>
+        // Fungsi untuk mengubah angka menjadi format Rupiah
         function formatRupiah(number) {
             return number.toLocaleString('id-ID');
         }
 
         function bayarSisa(id, nama, totalSudahBayar, totalHargaAcara, sisaBayar) {
+            // Mengatur ulang URL action pada form 'bayarSisaForm' dengan mengganti ':id' menggunakan ID pemesanan yang dikirim ke fungsi
+            document.getElementById('bayarSisaForm').action =
+                "{{ route('pemesanan.sisa-bayar', ':id') }}".replace(':id', id);
+
+            // Menyisipkan ID pemesanan ke dalam input hidden (agar bisa digunakan di sisi server jika dibutuhkan)
             document.getElementById('pemesananIdSisaBayar').value = id;
+            // Menampilkan nama pemesan di elemen dengan ID 'namaPemesanText'
             document.getElementById('namaPemesanText').textContent = nama;
+            // Menampilkan jumlah yang sudah dibayar dalam format rupiah
             document.getElementById('sudahBayarText').textContent = formatRupiah(totalSudahBayar);
+            // Menampilkan total harga acara dalam format rupiah
             document.getElementById('totalHargaText').textContent = formatRupiah(totalHargaAcara);
+            // Menampilkan sisa pembayaran dalam format rupiah
             document.getElementById('sisaBayarText').textContent = formatRupiah(sisaBayar);
         }
     </script>

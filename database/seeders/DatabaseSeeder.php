@@ -26,14 +26,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Membuat acara
-        // Acara::create([
-        //     'nama_acara' => 'Seminar Wisuda',
-        //     'lokasi' => 'Gedung Serba Guna',
-        //     'harga' => 100000,
-        //     'tanggal_mulai' => '2023-06-01',
-        //     'tanggal_selesai' => '2023-06-02',
-        //     'status' => true,
-        //     'catatan' => 'Catatan acara'
-        // ]);
+        Acara::create([
+            'nama_acara' => 'Seminar Wisuda',
+            'lokasi' => 'Gedung Serba Guna',
+            'harga' => 100000,
+            'tanggal_mulai' => '2023-06-01',
+            'tanggal_selesai' => '2023-06-02',
+            'status' => true,
+            'catatan' => 'Catatan acara'
+        ]);
     }
 }

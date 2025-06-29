@@ -126,19 +126,25 @@ class PemesananController extends Controller
 
     public function sisaBayar(Request $request, string $id)
     {
+        // Validasi form sisa bayar
         $request->validate([
-            'total_pembayaran_sisa' => ['required', 'numeric', 'min:500'],
+            'total_pembayaran_sisa' => [
+                'required', // Wajib ada isi
+                'numeric', // Wajib angka
+                'min:500' // Minimal angka 500
+            ],
             'metode_pembayaran' => ['required'],
             'catatan' => ['nullable'],
         ]);
 
-        $pemesanan = Pemesanan::find($id);
+        $pemesanan = Pemesanan::find($id); // Mencari pemesanan berdasarkan id
 
+        // Melakukan update total pembayaran pemesanan
         $pemesanan->update([
             'total_pembayaran' => $request->total_pembayaran_sisa + $pemesanan->total_pembayaran
         ]);
 
-        // Menambahkan data transaksi masuk
+        // Menambahkan data transaksi masuk baru
         $transaksiMasuk = TransaksiMasuk::create([
             'pemesanan_id' => $pemesanan->id,
             'acara_id' => $pemesanan->acara_id,
@@ -147,16 +153,22 @@ class PemesananController extends Controller
             'catatan' => $request->catatan
         ]);
 
+        // Jika hasil pembayaran kurang dari atau sama dengan 0
         if (($pemesanan->getSisaPembayaran() - $request->total_pembayaran_sisa) <= 0) {
             $transaksiMasuk->update([
-                'status' => 'Lunas'
+                'status' => 'Lunas' // Mengubah status transaksi masuk terkait menjadi lunas
             ]);
-        } else {
+        }
+        // Jika hasil pembayaran lebih dari 0 rupiah (belum lunas karena ada harga yang harus dibayar)
+        else {
             $transaksiMasuk->update([
-                'status' => 'Belum Lunas'
+                'status' => 'Belum Lunas' // Mengubah status transaksi masuk terkait menjadi belum lunas
             ]);
         }
 
-        return redirect()->route('pemesanan.index')->with('success', "Pemesanan $pemesanan->nama_pemesan berhasil dibayar.");
+        // Melakukan redirect ke halaman pemesanan
+        return redirect()->route('pemesanan.index')
+            // Dengan mengirimkan pesan sukses
+            ->with('success', "Pemesanan $pemesanan->nama_pemesan berhasil dibayar.");
     }
 }
