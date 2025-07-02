@@ -11,6 +11,7 @@
             </div>
 
             <div class="card-body">
+
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
                         {{ session('success') }}

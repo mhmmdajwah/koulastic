@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pemesanan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('acara_id');
+            $table->foreignId('acara_id')->constrained('acara')->onDelete('cascade');
             $table->string('nama_pemesan');
             $table->string('nomor_telepon');
             $table->text('catatan')->nullable();

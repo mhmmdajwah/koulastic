@@ -19,33 +19,6 @@ class AcaraController extends Controller
         return view('pages.acara.index', compact('daftarAcara'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_acara' => ['required'],
-            'lokasi' => ['required'],
-            'harga' => ['required', 'numeric'],
-            'tanggal_mulai' => ['required', 'date'],
-            'tanggal_selesai' => ['required', 'date'],
-            'catatan' => ['nullable'],
-        ]);
-
-        Acara::create([
-            'nama_acara' => $request->nama_acara,
-            'lokasi' => $request->lokasi,
-            'harga' => $request->harga,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'status' => true, // default acara aktif
-            'catatan' => $request->catatan
-        ]);
-
-        return redirect()->route('acara.index')->with('success', 'Acara berhasil ditambahkan.');
-    }
-
     public function show(string $id)
     {
         $acara = Acara::find($id);
@@ -96,22 +69,23 @@ class AcaraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         $acara = Acara::findOrFail($id);
+        $aksi = $request->aksi;
 
-        // Jika acara tidak memiliki pemesanan
-        if ($acara->pemesanan->isEmpty()) {
+        // Jika aksi adalah hapus
+        if ($aksi == 'hapus') {
             // Hapus acara
             $acara->delete();
             return redirect()->route('acara.index')->with('success', 'Acara berhasil dihapus.');
         }
-        // Jika acara memiliki pemesanan
+        // Jika aksi bukan hapus
         else {
             // Perbarui status
             $acara->update([
                 // Jika data status true maka ubah menjadi false
-                'status' => !$acara->status
+                'status' => $aksi == 'nonaktifkan' ? false : true,
             ]);
             return redirect()->route('acara.index')->with('success', 'Status acara berhasil diubah.');
         }

@@ -47,6 +47,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Acara</th>
+                            <th>Nama Pemesan</th>
                             <th>Total Pembayaran</th>
                             <th>Tanggal & Waktu</th>
                             <th>Catatan</th>
@@ -60,6 +61,11 @@
                                 <td>
                                     <a
                                         href="{{ route('acara.show', $transaksiKeluar->acara->id) }}">{{ $transaksiKeluar->acara->nama_acara }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('pemesanan.show', $transaksiKeluar->acara->pemesanan->id) }}">
+                                        {{ $transaksiKeluar->acara->pemesanan->nama_pemesan }}
+                                    </a>
                                 </td>
                                 <td>Rp. {{ number_format($transaksiKeluar->total_pembayaran, 0, ',', '.') }}</td>
                                 <td>

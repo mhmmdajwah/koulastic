@@ -113,17 +113,6 @@
                                             <i class='bx  bxs-pencil'></i>
                                             Edit
                                         </a>
-                                        <form
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus pemesanan {{ $pemesanan->nama_pemesanan }}?');"
-                                            action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn btn-sm btn-danger d-flex align-items-center gap-1">
-                                                <i class='bx  bxs-trash'></i>
-                                                Hapus
-                                            </button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -151,7 +140,7 @@
                             {{-- Nama Pemesan --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
-                                <input value="Raju Adha Dani" type="text" name="nama_pemesan" id="nama_pemesan"
+                                <input value="Ajwah" type="text" name="nama_pemesan" id="nama_pemesan"
                                     class="form-control" placeholder="Nama pemesan" required>
                             </div>
 
@@ -162,8 +151,8 @@
                                     class="form-control" placeholder="Nomor telepon" required>
                             </div>
 
-                            {{-- Acara --}}
-                            <div class="mb-3 col-12">
+                            {{-- Pilih Acara --}}
+                            {{-- <div class="mb-3 col-12">
                                 <label for="acara_id" class="form-label">Acara</label>
                                 <select required name="acara_id" id="acara_id" class="form-control">
                                     <option selected disabled value="">-- Pilih Acara --</option>
@@ -177,14 +166,45 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+                            {{-- Nama Acara --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="nama_acara" class="form-label">Nama Acara</label>
+                                <input value="Pernikahan" type="text" name="nama_acara" id="nama_acara"
+                                    class="form-control" placeholder="Nomor telepon" required>
+                            </div>
+
+                            {{-- Lokasi --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="lokasi" class="form-label">Lokasi</label>
+                                <input value="Banjarmasin, Sungai Andai" type="text" name="lokasi" id="lokasi"
+                                    class="form-control" placeholder="Nomor telepon" required>
+                            </div>
+
+                            {{-- Harga Acara --}}
+                            <x-text-field.currency class="mb-3 col-6" name="harga_acara" label="Total Harga Acara"
+                                value="500000" placeholder="Total harga acara" />
+
+                            {{-- Tanggal Mulai Acara --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
+                                <input value="2027-01-01" type="date" name="tanggal_mulai" id="tanggal_mulai"
+                                    class="form-control" required>
+                            </div>
+
+                            {{-- Tanggal Selesai Acara --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
+                                <input value="2027-01-01" type="date" name="tanggal_selesai" id="tanggal_selesai"
+                                    class="form-control" required>
                             </div>
 
                             {{-- Total Pembayaran --}}
-                            <x-text-field.currency class="mb-3 col-6" name="total_pembayaran" label="Total Pembayaran"
-                                placeholder="Total pembayaran" />
+                            <x-text-field.currency class="mb-3 col-6" name="total_pembayaran" label="Total Pembayaran DP"
+                                value="100000" placeholder="Total pembayaran DP" />
 
                             {{-- Metode Pembayaran --}}
-                            <div class="mb-3 col-6">
+                            <div class="mb-3">
                                 <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
                                 <select required name="metode_pembayaran" id="metode_pembayaran" class="form-control">
                                     <option value="" selected disabled>-- Pilih Metode Pembayaran --</option>
@@ -197,7 +217,7 @@
 
                             {{-- Catatan --}}
                             <div class="mb-3">
-                                <label for="catatan" class="form-label">Catatan (Opsional)</label>
+                                <label for="catatan" class="form-label">Catatan Pemesanan (Opsional)</label>
                                 <textarea name="catatan" id="catatan" class="form-control" rows="3"
                                     placeholder="Tambahkan catatan jika perlu"></textarea>
                             </div>

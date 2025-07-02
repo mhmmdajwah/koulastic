@@ -15,7 +15,7 @@ class Pemesanan extends Model
 
     public function acara()
     {
-        return $this->belongsTo(Acara::class);
+        return $this->hasOne(Acara::class, 'id', 'acara_id');
     }
 
     public function transaksiMasuk()

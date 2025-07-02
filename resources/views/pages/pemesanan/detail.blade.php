@@ -23,18 +23,10 @@
                     <input disabled value="{{ $pemesanan->nomor_telepon }}" type="text" name="nomor_telepon"
                         id="nomor_telepon" class="form-control" placeholder="Nomor Telepon" required>
                 </div>
-                {{-- Acara --}}
-                <div class="mb-3 col-12">
-                    <label for="acara_id" class="form-label">Acara</label>
-                    <select disabled required name="acara_id" id="acara_id" class="form-control">
-                        <option selected disabled value="">-- Pilih Acara --</option>
-                        <option>
-                            {{ $pemesanan->acara->nama_acara }} -
-                            {{ \Carbon\Carbon::parse($pemesanan->acara->tanggal_mulai)->translatedFormat('d F Y') }}
-                            s.d.
-                            {{ \Carbon\Carbon::parse($pemesanan->acara->tanggal_selesai)->translatedFormat('d F Y') }}
-                        </option>
-                    </select>
+                {{-- Nama Pemesan --}}
+                <div class="mb-3">
+                    <label class="form-label">Nama Acara</label>
+                    <input disabled value="{{ $pemesanan->acara->nama_acara }}" class="form-control" equired>
                 </div>
             </div>
             {{-- Catatan --}}
@@ -60,6 +52,14 @@
                     <strong>
                         Rp.
                         {{ number_format($pemesanan->getSisaPembayaran(), 0, ',', '.') }}
+                    </strong>
+                </div>
+                <div>
+                    {{-- Total Sudah Dibayar --}}
+                    <label class="form-label">Total Sudah Dibayar: </label>
+                    <strong>
+                        Rp.
+                        {{ number_format($pemesanan->getTotalSudahBayar(), 0, ',', '.') }}
                     </strong>
                 </div>
             </div>

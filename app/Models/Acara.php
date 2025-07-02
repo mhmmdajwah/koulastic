@@ -15,7 +15,7 @@ class Acara extends Model
 
     public function pemesanan()
     {
-        return $this->hasMany(Pemesanan::class);
+        return $this->hasOne(Pemesanan::class);
     }
 
     public function transaksiMasuk()

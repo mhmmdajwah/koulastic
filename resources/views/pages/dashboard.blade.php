@@ -30,7 +30,7 @@
             <div class="col-xl-3 col-md-6">
                 {{-- Transaksi Masuk --}}
                 <div class="card bg-danger text-white mb-4">
-                    <div class="card-body">Transaksi Masuk:
+                    <div class="card-body">Total Transaksi Masuk:
                         <strong>Rp.
                             {{ number_format(App\Models\TransaksiMasuk::sum('total_pembayaran'), 0, ',', '.') }}
                         </strong>
@@ -45,7 +45,7 @@
             <div class="col-xl-3 col-md-6">
                 {{-- Transaksi Keluar --}}
                 <div class="card bg-warning text-black mb-4">
-                    <div class="card-body">Transaksi Keluar:
+                    <div class="card-body">Total Transaksi Keluar:
                         <strong>Rp.
                             {{ number_format(App\Models\TransaksiKeluar::sum('total_pembayaran'), 0, ',', '.') }}
                         </strong>

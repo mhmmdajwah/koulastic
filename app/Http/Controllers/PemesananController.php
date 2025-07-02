@@ -40,34 +40,53 @@ class PemesananController extends Controller
         $request->validate([
             'nama_pemesan' => ['required'],
             'nomor_telepon' => ['nullable'],
-            'acara_id' => ['required'],
+
+            'nama_acara' => ['required'],
+            'lokasi' => ['required'],
+            'harga_acara' => ['required', 'numeric'],
+            'tanggal_mulai' => ['required', 'date'],
+            'tanggal_selesai' => ['required', 'date'],
+
             'total_pembayaran' => ['required', 'numeric', 'min:500'],
             'metode_pembayaran' => ['required'],
             'catatan' => ['nullable'],
+        ]);
+
+        // Menambahkan data acara
+        $acara = Acara::create([
+            'nama_acara' => $request->nama_acara,
+            'lokasi' => $request->lokasi,
+            'harga' => $request->harga_acara,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai
         ]);
 
         // Menambahkan data pemesanan
         $pemesanan = Pemesanan::create([
             'nama_pemesan' => $request->nama_pemesan,
             'nomor_telepon' => $request->nomor_telepon,
-            'acara_id' => $request->acara_id,
+            'acara_id' => $acara->id, // Mengambil acara id yang baru dibuat
             'catatan' => $request->catatan
         ]);
 
         // Menambahkan data transaksi masuk
         $transaksiMasuk = TransaksiMasuk::create([
-            'pemesanan_id' => $pemesanan->id,
-            'acara_id' => $pemesanan->acara_id,
+            'pemesanan_id' => $pemesanan->id, // Mengambil pemesanan id yang baru dibuat
+            'acara_id' => $pemesanan->acara_id, // Mengambil acara id melalui relasi pemesanan
             'total_pembayaran' => $request->total_pembayaran,
             'metode_pembayaran' => $request->metode_pembayaran,
             'catatan' => $request->catatan
         ]);
 
-        if ($pemesanan->getSisaPembayaran() <= 0) {
+        // Jika sisa pembayaran kurang dari atau sama dengan 0 (lunas)
+        $sisaPembayaran = $request->harga_acara - $request->total_pembayaran;
+        if ($sisaPembayaran <= 0) {
             $transaksiMasuk->update([
                 'status' => 'Lunas'
             ]);
-        } else {
+        }
+        // Jika sisa pembayaran lebih dari 0 (belum lunas)
+        else {
             $transaksiMasuk->update([
                 'status' => 'Belum Lunas'
             ]);
