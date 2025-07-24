@@ -15,9 +15,7 @@ class PemesananController extends Controller
     public function index()
     {
         return view('pages.pemesanan.index', [
-            // Mengambil semua data pemesanan berdasarkan data terbaru
             'daftarPemesanan' => Pemesanan::latest()->get(),
-            // Hanya mencari acara dengan status aktif/true
             'daftarAcara' => Acara::where('status', true)->latest()->get(),
         ]);
     }
@@ -136,7 +134,7 @@ class PemesananController extends Controller
     public function destroy(string $id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
-        $namaPemesan = $pemesanan->nama_pemesan;
+        $namaPemesan = $pemesanan->nama_pemesan;  
 
         $pemesanan->delete();
 

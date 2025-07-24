@@ -9,7 +9,7 @@
                 <span><i class="fas fa-table me-1"></i> Daftar Pemesanan</span>
                 <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" data-bs-toggle="modal"
                     data-bs-target="#pemesananModal">
-                    Tambah Pemesanan
+                        Tambah Pemesanan
                     <i class='bx  bxs-plus'></i>
                 </button>
             </div>
@@ -119,8 +119,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- END TABEL --}}
-
             </div>
         </div>
     </div>
@@ -140,14 +138,14 @@
                             {{-- Nama Pemesan --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
-                                <input value="Ajwah" type="text" name="nama_pemesan" id="nama_pemesan"
+                                <input  type="text" name="nama_pemesan" id="nama_pemesan"
                                     class="form-control" placeholder="Nama pemesan" required>
                             </div>
 
                             {{-- Nomor Telepon --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
-                                <input value="08123456789" type="text" name="nomor_telepon" id="nomor_telepon"
+                                <input  type="number" name="nomor_telepon" id="nomor_telepon"
                                     class="form-control" placeholder="Nomor telepon" required>
                             </div>
 
@@ -170,38 +168,38 @@
                             {{-- Nama Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nama_acara" class="form-label">Nama Acara</label>
-                                <input value="Pernikahan" type="text" name="nama_acara" id="nama_acara"
-                                    class="form-control" placeholder="Nomor telepon" required>
+                                <input type="text" name="nama_acara" id="nama_acara"
+                                    class="form-control" placeholder="Nama Acara" required>
                             </div>
 
                             {{-- Lokasi --}}
                             <div class="mb-3 col-md-6">
                                 <label for="lokasi" class="form-label">Lokasi</label>
-                                <input value="Banjarmasin, Sungai Andai" type="text" name="lokasi" id="lokasi"
-                                    class="form-control" placeholder="Nomor telepon" required>
+                                <input  type="text" name="lokasi" id="lokasi"
+                                    class="form-control" placeholder="Lokasi" required>
                             </div>
 
                             {{-- Harga Acara --}}
                             <x-text-field.currency class="mb-3 col-6" name="harga_acara" label="Total Harga Acara"
-                                value="500000" placeholder="Total harga acara" />
+                                 placeholder="Total harga acara" />
 
                             {{-- Tanggal Mulai Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-                                <input value="2027-01-01" type="date" name="tanggal_mulai" id="tanggal_mulai"
+                                <input  type="date" name="tanggal_mulai" id="tanggal_mulai"
                                     class="form-control" required>
                             </div>
 
                             {{-- Tanggal Selesai Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
-                                <input value="2027-01-01" type="date" name="tanggal_selesai" id="tanggal_selesai"
+                                <input  type="date" name="tanggal_selesai" id="tanggal_selesai"
                                     class="form-control" required>
                             </div>
 
                             {{-- Total Pembayaran --}}
                             <x-text-field.currency class="mb-3 col-6" name="total_pembayaran" label="Total Pembayaran DP"
-                                value="100000" placeholder="Total pembayaran DP" />
+                                placeholder="Total pembayaran DP" />
 
                             {{-- Metode Pembayaran --}}
                             <div class="mb-3">

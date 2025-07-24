@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     // Halaman Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/calendar/events', [DashboardController::class, 'calendarEvents']);
 
     Route::resource('/pemesanan', PemesananController::class);
     Route::post('/pemesanan/{id}/sisa-bayar/', [PemesananController::class, 'sisaBayar'])
