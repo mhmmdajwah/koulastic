@@ -8,17 +8,17 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Koulastic Management</title>
-    <link rel="icon" type="img/png" href="{{asset('img/logo koulastic.png')}}"
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link rel="icon" type="img/png" href="{{ asset('img/logo koulastic.png') }}" <link
+        href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('ole/css/styles.css') }}" rel="stylesheet" />
     <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <!-- FullCalendar CSS & JS -->
-{{-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+    {{-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
 <script src="
 https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.18/index.global.min.js
 "></script> --}}
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
     {{-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
 </head>
@@ -26,11 +26,11 @@ https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.18/index.global.min.js
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark justify-content-between">
         <!-- Navbar Brand-->
-         <img class="rounded-circle me-2" style="height: 100px; width: 100px; margin-left: 60px; margin-top: 20px;" src="{{ asset('img/logo koulastic.png') }}"
-               alt="Logo">
+        <img class="rounded-circle me-2" style="height: 100px; width: 100px; margin-left: 60px; margin-top: 20px;"
+            src="{{ asset('img/logo koulastic.png') }}" alt="Logo">
         <a class="navbar-brand ms-3" href="/">Koulastic Management</a>
         <!-- Sidebar Toggle-->
-       
+
         <a class="me-3 btn btn-danger d-flex align-items-center gap-1" href="{{ route('logout') }}">
             <i class='bx bx-arrow-in-left-square-half fs-5'></i>
             Logout
@@ -126,6 +126,7 @@ https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.18/index.global.min.js
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('ole/js/datatables-simple-demo.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

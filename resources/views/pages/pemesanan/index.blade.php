@@ -126,7 +126,7 @@
     <!-- Modal Tambah Pemesanan -->
     <div class="modal fade" id="pemesananModal" tabindex="-1" aria-labelledby="pemesananModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="{{ route('pemesanan.store') }}" method="POST">
+            <form action="{{ route('pemesanan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -201,6 +201,13 @@
                             <x-text-field.currency class="mb-3 col-6" name="total_pembayaran" label="Total Pembayaran DP"
                                 placeholder="Total pembayaran DP" />
 
+                            {{-- Image --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="image" class="form-label">Bukti Pembayaran</label>
+                                <input  type="file" name="image" id="image"
+                                    class="form-control" required>
+                            </div>
+
                             {{-- Metode Pembayaran --}}
                             <div class="mb-3">
                                 <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
@@ -235,7 +242,7 @@
     <div class="modal fade" id="bayarSisaModal" tabindex="-1" aria-labelledby="bayarSisaModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <form id="bayarSisaForm" action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST">
+            <form id="bayarSisaForm" action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -264,6 +271,12 @@
                         {{-- Total Pembayaran --}}
                         <x-text-field.currency class="mb-3" name="total_pembayaran_sisa" label="Total Pembayaran"
                             placeholder="Total pembayaran Sisa" />
+                        <div class="mb-3 col-md-12">
+                                <label for="image" class="form-label">Bukti Pembayaran</label>
+                                <input  type="file" name="image" id="image"
+                                    class="form-control" required>
+                            </div>
+
 
                         {{-- Metode Pembayaran --}}
                         <div class="mb-3">

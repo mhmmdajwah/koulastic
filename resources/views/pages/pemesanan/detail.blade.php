@@ -74,6 +74,7 @@
                             <th>Nama Pemesan</th>
                             <th>Acara</th>
                             <th>Total Pembayaran</th>
+                            <th>Bukti Pembayaran</th>
                             <th>Metode Pembayaran</th>
                             <th>Status</th>
                             <th>Tanggal & Waktu</th>
@@ -90,6 +91,30 @@
                                 <td>
                                     <strong>{{ number_format($transaksiMasuk->total_pembayaran, '0', ',', '.') }}</strong>
                                 </td>
+                                <td>
+                                    @if ($transaksiMasuk->image)
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#imgModal{{ $transaksiMasuk->id }}">
+                                            <img src="{{ asset('storage/' . $transaksiMasuk->image) }}"
+                                                alt="Bukti Pembayaran" width="100" class="rounded shadow-sm"
+                                                style="cursor: zoom-in;">
+                                        </a>
+                                        <div class="modal fade" id="imgModal{{ $transaksiMasuk->id }}" tabindex="-1"
+                                            aria-labelledby="imgModalLabel{{ $transaksiMasuk->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-body p-0">
+                                                        <img src="{{ asset('storage/' . $transaksiMasuk->image) }}"
+                                                            alt="Bukti Pembayaran" class="img-fluid rounded w-100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+
                                 <td>{{ $transaksiMasuk->metode_pembayaran }}</td>
                                 <td>
                                     @if ($transaksiMasuk->status == 'Lunas')

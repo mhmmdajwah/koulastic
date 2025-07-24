@@ -4,7 +4,7 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">Edit Pemesanan</h1>
 
-        <form action="{{ route('pemesanan.update', $pemesanan->id) }}" method="POST" class="card-body card mt-4">
+        <form action="{{ route('pemesanan.update', $pemesanan->id) }}" method="POST" class="card-body card mt-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -35,6 +35,10 @@
                             </option>
                         @endforeach
                     </select>
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="image" class="form-label">Edit Bukti Pembayaran</label>
+                    <input type="file" name="image" id="image" class="form-control">
                 </div>
             </div>
             {{-- Catatan --}}

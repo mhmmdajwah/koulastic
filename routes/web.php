@@ -44,4 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaksi-masuk', TransaksiMasukController::class);
 
     Route::resource('/transaksi-keluar', TransaksiKeluarController::class);
+
+    Route::get('/kalender-acara', [DashboardController::class, 'kalender'])->name('kalender.acara');
+Route::get('/kalender-acara/json', [DashboardController::class, 'kalenderJson'])->name('kalender.acara.json');
 });
