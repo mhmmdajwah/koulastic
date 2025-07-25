@@ -25,6 +25,6 @@ class Acara extends Model
 
     public function transaksiKeluar()
     {
-        return $this->hasMany(TransaksiKeluar::class);
+        return $this->hasMany(TransaksiKeluar::class, 'acara_id');
     }
 }

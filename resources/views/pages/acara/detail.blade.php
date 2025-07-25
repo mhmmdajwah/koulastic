@@ -70,14 +70,22 @@
                 <div>
                     <label for="catatan" class="form-label">Transaksi Keluar: </label>
                     <strong>
-                        Rp. {{ number_format($acara->transaksiKeluar->sum('total_pembayaran'), '0', ',', '.') }}
+                        Rp.
+                        {{ number_format(\App\Models\TransaksiKeluar::where('nama_acara', $acara->nama_acara)->sum('total_pembayaran'), 0, ',', '.') }}
+
                     </strong>
                 </div>
                 <div>
                     <label for="catatan" class="form-label">Pendapatan: </label>
                     <strong>
-                        Rp.
-                        {{ number_format($acara->transaksiMasuk->sum('total_pembayaran') - $acara->transaksiKeluar->sum('total_pembayaran'), '0', ',', '.') }}
+                        {{ number_format(
+                            $acara->transaksiMasuk->sum('total_pembayaran') -
+                                \App\Models\TransaksiKeluar::where('nama_acara', $acara->nama_acara)->sum('total_pembayaran'),
+                            0,
+                            ',',
+                            '.',
+                        ) }}
+
                     </strong>
                 </div>
             </div>
@@ -275,8 +283,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <a
-                                            href="{{ route('acara.show', $transaksiKeluar->acara->id) }}">{{ $transaksiKeluar->acara->nama_acara }}</a>
+                                        {{ $transaksiKeluar->nama_acara }}
                                     </td>
                                     <td>Rp. {{ number_format($transaksiKeluar->total_pembayaran, 0, ',', '.') }}</td>
                                     <td>

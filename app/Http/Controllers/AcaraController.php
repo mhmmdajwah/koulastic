@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Acara;
 use App\Models\Pemesanan;
-use App\Models\TransaksiMasuk;
 use Illuminate\Http\Request;
+use App\Models\TransaksiMasuk;
+use App\Models\TransaksiKeluar;
 
 class AcaraController extends Controller
 {
@@ -27,7 +28,8 @@ class AcaraController extends Controller
             'acara' => $acara,
             'daftarPemesanan' => $acara->pemesanan()->latest()->get(),
             'daftarTransaksiMasuk' => $acara->transaksiMasuk()->latest()->get(),
-            'daftarTransaksiKeluar' => $acara->transaksiKeluar()->latest()->get()
+            'daftarTransaksiKeluar' => \App\Models\TransaksiKeluar::where('nama_acara', $acara->nama_acara)->latest()->get()
+
         ]);
     }
 

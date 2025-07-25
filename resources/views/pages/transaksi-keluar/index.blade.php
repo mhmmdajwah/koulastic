@@ -48,6 +48,7 @@
                             <th>No.</th>
                             <th>Nama Acara</th>
                             <th>Total Pembayaran</th>
+                            <th>Bukti Pembayaran</th>
                             <th>Tanggal & Waktu</th>
                             <th>Catatan</th>
                             <th>Aksi</th>
@@ -61,6 +62,29 @@
                                     {{ $transaksiKeluar->nama_acara }}
                                 </td>
                                 <td>Rp. {{ number_format($transaksiKeluar->total_pembayaran, 0, ',', '.') }}</td>
+                                <td>
+                                    @if ($transaksiKeluar->image)
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#imgModal{{ $transaksiKeluar->id }}">
+                                            <img src="{{ asset('storage/' . $transaksiKeluar->image) }}"
+                                                alt="Bukti Pembayaran" width="80" class="rounded shadow-sm"
+                                                style="cursor: zoom-in;">
+                                        </a>
+                                        <div class="modal fade" id="imgModal{{ $transaksiKeluar->id }}" tabindex="-1"
+                                            aria-labelledby="imgModalLabel{{ $transaksiKeluar->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-body p-0">
+                                                        <img src="{{ asset('storage/' . $transaksiKeluar->image) }}"
+                                                            alt="Bukti Pembayaran" class="img-fluid rounded w-100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
                                 <td>
                                     {{ Carbon\Carbon::parse($transaksiKeluar->created_at)->translatedFormat('d F Y H:i:s') }}
                                 </td>
