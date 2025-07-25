@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acara;
-use App\Models\TransaksiKeluar;
 use Illuminate\Http\Request;
+use App\Models\TransaksiKeluar;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiKeluarController extends Controller
 {
@@ -25,19 +26,27 @@ class TransaksiKeluarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'acara_id' => ['required'],
-            'total_pembayaran' => ['required'],
-            'catatan' => ['nullable'],
+            'nama_acara' => ['required', 'string', 'max:255'],
+            'total_pembayaran' => ['required', 'integer'],
+            'image' => ['nullable', 'image', 'max:2048'],
+            'catatan' => ['nullable', 'string'],
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('bukti-pembayaran', 'public');
+        }
 
         TransaksiKeluar::create([
-            'acara_id' => $request->acara_id,
+            'nama_acara' => $request->nama_acara,
             'total_pembayaran' => $request->total_pembayaran,
-            'catatan' => $request->catatan
+            'image' => $imagePath,
+            'catatan' => $request->catatan,
         ]);
 
-        return redirect()->route('transaksi-keluar.index')->with('success', "Transaksi keluar berhasil ditambahkan.");
+        return redirect()->route('transaksi-keluar.index')->with('success', 'Transaksi keluar berhasil ditambahkan.');
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -56,20 +65,37 @@ class TransaksiKeluarController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'acara_id' => ['required'],
-            'total_pembayaran' => ['required'],
+            'nama_acara' => ['required', 'string', 'max:255'],
+            'total_pembayaran' => ['required', 'numeric'],
             'catatan' => ['nullable'],
+            'image' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        $transaksiKeluar = TransaksiKeluar::find($id);
+        $transaksiKeluar = TransaksiKeluar::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($transaksiKeluar->image && Storage::exists('public/' . $transaksiKeluar->image)) {
+                Storage::delete('public/' . $transaksiKeluar->image);
+            }
+
+            $imagePath = $request->file('image')->store('bukti-pembayaran', 'public');
+        } else {
+            $imagePath = $transaksiKeluar->image;
+        }
+
+        // Update data
         $transaksiKeluar->update([
-            'acara_id' => $request->acara_id,
+            'nama_acara' => $request->nama_acara,
             'total_pembayaran' => $request->total_pembayaran,
-            'catatan' => $request->catatan
+            'catatan' => $request->catatan,
+            'image' => $imagePath,
         ]);
 
-        return redirect()->route('transaksi-keluar.index')->with('success', "Transaksi keluar berhasil diubah.");
+        return redirect()->route('transaksi-keluar.index')
+            ->with('success', "Transaksi keluar berhasil diubah.");
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -77,6 +103,11 @@ class TransaksiKeluarController extends Controller
     public function destroy(string $id)
     {
         $transaksiKeluar = TransaksiKeluar::findOrFail($id);
+
+        if ($transaksiKeluar->image && Storage::exists($transaksiKeluar->image)) {
+            Storage::delete($transaksiKeluar->image);
+        }
+
         $transaksiKeluar->delete();
 
         return redirect()->route('transaksi-keluar.index')->with('success', 'Data transaksi keluar berhasil dihapus.');

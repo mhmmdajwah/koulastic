@@ -46,6 +46,7 @@
                             <th>Acara</th>
                             <th>Total Pembayaran</th>
                             <th>Metode Pembayaran</th>
+                            <th>Bukti Pembayaran</th>
                             <th>Status</th>
                             <th>Tanggal & Waktu</th>
                             <th>Catatan</th>
@@ -66,6 +67,29 @@
                                 </td>
                                 <td>{{ $transaksiMasuk->metode_pembayaran }}</td>
                                 <td>
+                                    @if ($transaksiMasuk->image)
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#imgModal{{ $transaksiMasuk->id }}">
+                                            <img src="{{ asset('storage/' . $transaksiMasuk->image) }}"
+                                                alt="Bukti Pembayaran" width="80" class="rounded shadow-sm"
+                                                style="cursor: zoom-in;">
+                                        </a>
+                                        <div class="modal fade" id="imgModal{{ $transaksiMasuk->id }}" tabindex="-1"
+                                            aria-labelledby="imgModalLabel{{ $transaksiMasuk->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-body p-0">
+                                                        <img src="{{ asset('storage/' . $transaksiMasuk->image) }}"
+                                                            alt="Bukti Pembayaran" class="img-fluid rounded w-100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
                                     @if ($transaksiMasuk->status == 'Lunas')
                                         <span class="badge bg-success">Lunas</span>
                                     @else
@@ -79,19 +103,94 @@
                                     {{ $transaksiMasuk->catatan ?? '-' }}
                                 </td>
                                 <td>
-                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi masuk?');"
-                                        action="{{ route('transaksi-masuk.destroy', $transaksiMasuk->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-sm btn-danger d-flex align-items-center gap-1">
-                                            <i class='bx  bxs-trash'></i>
-                                            Hapus
-                                        </button>
-                                    </form>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ $transaksiMasuk->id }}"
+                                            class="btn btn-sm btn-warning d-flex align-items-center gap-1">
+                                            <i class='bx bxs-pencil'></i> Edit
+                                        </a>
+
+                                        <form
+                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi masuk?');"
+                                            action="{{ route('transaksi-masuk.destroy', $transaksiMasuk->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="btn btn-sm btn-danger d-flex align-items-center gap-1">
+                                                <i class='bx bxs-trash'></i> Hapus
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
+                            <!-- Modal Edit Transaksi -->
+                            <div class="modal fade" id="editModal{{ $transaksiMasuk->id }}" tabindex="-1"
+                                aria-labelledby="editModalLabel{{ $transaksiMasuk->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form action="{{ route('transaksi-masuk.update', $transaksiMasuk->id) }}"
+                                            method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel{{ $transaksiMasuk->id }}">Edit
+                                                    Transaksi Masuk</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Tutup"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Metode Pembayaran</label>
+                                                        <input type="text" name="metode_pembayaran"
+                                                            value="{{ $transaksiMasuk->metode_pembayaran }}"
+                                                            class="form-control" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Total Pembayaran</label>
+                                                        <input type="number" name="total_pembayaran"
+                                                            value="{{ $transaksiMasuk->total_pembayaran }}"
+                                                            class="form-control" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Status</label>
+                                                        <select name="status" class="form-select" required>
+                                                            <option value="Lunas"
+                                                                {{ $transaksiMasuk->status == 'Lunas' ? 'selected' : '' }}>
+                                                                Lunas</option>
+                                                            <option value="Belum Lunas"
+                                                                {{ $transaksiMasuk->status == 'Belum Lunas' ? 'selected' : '' }}>
+                                                                Belum Lunas</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Bukti Pembayaran (Opsional)</label>
+                                                        <input type="file" name="image" class="form-control"
+                                                            accept="image/*">
+                                                        @if ($transaksiMasuk->image)
+                                                            <small class="text-muted d-block mt-1">Bukti lama: <a
+                                                                    href="{{ asset('storage/' . $transaksiMasuk->image) }}"
+                                                                    target="_blank">Lihat</a></small>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label">Catatan</label>
+                                                        <textarea name="catatan" class="form-control" rows="3">{{ $transaksiMasuk->catatan }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer mt-3">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransaksiMasuk;
 use Illuminate\Http\Request;
+use App\Models\TransaksiMasuk;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiMasukController extends Controller
 {
@@ -51,12 +52,32 @@ class TransaksiMasukController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'metode_pembayaran' => 'required|string|max:255',
+            'total_pembayaran' => 'required|integer|min:0',
+            'status' => 'required|in:Lunas,Belum Lunas',
+            'catatan' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+        $transaksi = TransaksiMasuk::findOrFail($id);
+
+        $transaksi->metode_pembayaran = $request->metode_pembayaran;
+        $transaksi->total_pembayaran = $request->total_pembayaran;
+        $transaksi->status = $request->status;
+        $transaksi->catatan = $request->catatan;
+
+        if ($request->hasFile('image')) {
+            if ($transaksi->image && Storage::exists('public/' . $transaksi->image)) {
+                Storage::delete('public/' . $transaksi->image);
+            }
+            $path = $request->file('image')->store('bukti_pembayaran', 'public');
+            $transaksi->image = $path;
+        }
+
+        $transaksi->save();
+        return redirect()->route('transaksi-masuk.index')->with('success', 'Transaksi berhasil diperbarui.');
     }
 
     /**

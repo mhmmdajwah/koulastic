@@ -9,7 +9,7 @@
                 <span><i class="fas fa-table me-1"></i> Daftar Pemesanan</span>
                 <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" data-bs-toggle="modal"
                     data-bs-target="#pemesananModal">
-                        Tambah Pemesanan
+                    Tambah Pemesanan
                     <i class='bx  bxs-plus'></i>
                 </button>
             </div>
@@ -138,15 +138,15 @@
                             {{-- Nama Pemesan --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
-                                <input  type="text" name="nama_pemesan" id="nama_pemesan"
-                                    class="form-control" placeholder="Nama pemesan" required>
+                                <input type="text" name="nama_pemesan" id="nama_pemesan" class="form-control"
+                                    placeholder="Nama pemesan" required>
                             </div>
 
                             {{-- Nomor Telepon --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
-                                <input  type="number" name="nomor_telepon" id="nomor_telepon"
-                                    class="form-control" placeholder="Nomor telepon" required>
+                                <input type="number" name="nomor_telepon" id="nomor_telepon" class="form-control"
+                                    placeholder="Nomor telepon" required>
                             </div>
 
                             {{-- Pilih Acara --}}
@@ -168,33 +168,33 @@
                             {{-- Nama Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="nama_acara" class="form-label">Nama Acara</label>
-                                <input type="text" name="nama_acara" id="nama_acara"
-                                    class="form-control" placeholder="Nama Acara" required>
+                                <input type="text" name="nama_acara" id="nama_acara" class="form-control"
+                                    placeholder="Nama Acara" required>
                             </div>
 
                             {{-- Lokasi --}}
                             <div class="mb-3 col-md-6">
                                 <label for="lokasi" class="form-label">Lokasi</label>
-                                <input  type="text" name="lokasi" id="lokasi"
-                                    class="form-control" placeholder="Lokasi" required>
+                                <input type="text" name="lokasi" id="lokasi" class="form-control"
+                                    placeholder="Lokasi" required>
                             </div>
 
                             {{-- Harga Acara --}}
                             <x-text-field.currency class="mb-3 col-6" name="harga_acara" label="Total Harga Acara"
-                                 placeholder="Total harga acara" />
+                                placeholder="Total harga acara" />
 
                             {{-- Tanggal Mulai Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-                                <input  type="date" name="tanggal_mulai" id="tanggal_mulai"
-                                    class="form-control" required>
+                                <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
+                                    required>
                             </div>
 
                             {{-- Tanggal Selesai Acara --}}
                             <div class="mb-3 col-md-6">
                                 <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
-                                <input  type="date" name="tanggal_selesai" id="tanggal_selesai"
-                                    class="form-control" required>
+                                <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="form-control"
+                                    required>
                             </div>
 
                             {{-- Total Pembayaran --}}
@@ -204,8 +204,7 @@
                             {{-- Image --}}
                             <div class="mb-3 col-md-12">
                                 <label for="image" class="form-label">Bukti Pembayaran</label>
-                                <input  type="file" name="image" id="image"
-                                    class="form-control" required>
+                                <input type="file" name="image" id="image" class="form-control" required>
                             </div>
 
                             {{-- Metode Pembayaran --}}
@@ -242,7 +241,8 @@
     <div class="modal fade" id="bayarSisaModal" tabindex="-1" aria-labelledby="bayarSisaModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <form id="bayarSisaForm" action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST" enctype="multipart/form-data">
+            <form id="bayarSisaForm" action="{{ route('pemesanan.sisa-bayar', 1) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -272,10 +272,9 @@
                         <x-text-field.currency class="mb-3" name="total_pembayaran_sisa" label="Total Pembayaran"
                             placeholder="Total pembayaran Sisa" />
                         <div class="mb-3 col-md-12">
-                                <label for="image" class="form-label">Bukti Pembayaran</label>
-                                <input  type="file" name="image" id="image"
-                                    class="form-control" required>
-                            </div>
+                            <label for="image" class="form-label">Bukti Pembayaran</label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                        </div>
 
 
                         {{-- Metode Pembayaran --}}

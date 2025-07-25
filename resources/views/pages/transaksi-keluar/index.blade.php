@@ -46,8 +46,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Acara</th>
-                            <th>Nama Pemesan</th>
+                            <th>Nama Acara</th>
                             <th>Total Pembayaran</th>
                             <th>Tanggal & Waktu</th>
                             <th>Catatan</th>
@@ -59,13 +58,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
-                                    <a
-                                        href="{{ route('acara.show', $transaksiKeluar->acara->id) }}">{{ $transaksiKeluar->acara->nama_acara }}</a>
-                                </td>
-                                <td>
-                                    <a href="{{ route('pemesanan.show', $transaksiKeluar->acara->pemesanan->id) }}">
-                                        {{ $transaksiKeluar->acara->pemesanan->nama_pemesan }}
-                                    </a>
+                                    {{ $transaksiKeluar->nama_acara }}
                                 </td>
                                 <td>Rp. {{ number_format($transaksiKeluar->total_pembayaran, 0, ',', '.') }}</td>
                                 <td>
@@ -106,7 +99,7 @@
     <div class="modal fade" id="transaksiKeluarModal" tabindex="-1" aria-labelledby="transaksiKeluarModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <form action="{{ route('transaksi-keluar.store') }}" method="POST">
+            <form action="{{ route('transaksi-keluar.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -116,26 +109,19 @@
                     <div class="modal-body">
                         <div class="row">
 
-                            {{-- Acara --}}
-                            <div class="mb-3 col-12">
-                                <label for="acara_id" class="form-label">Acara</label>
-                                <select required name="acara_id" id="acara_id" class="form-control">
-                                    <option selected disabled value="">-- Pilih Acara --</option>
-                                    @foreach ($daftarAcara as $acara)
-                                        <option value="{{ $acara->id }}">
-                                            {{ $acara->nama_acara }} |
-                                            Rp. {{ number_format($acara->harga, 0, ',', '.') }} |
-                                            {{ $acara->tanggal_mulai }}
-                                            s.d.
-                                            {{ $acara->tanggal_selesai }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="mb-3">
+                                <label for="nama_acara" class="form-label">Nama Acara</label>
+                                <input type="text" name="nama_acara" id="nama_acara" class="form-control" rows="3" placeholder="Nama Transaksi Keluar"></input>
                             </div>
 
                             {{-- Total Pembayaran --}}
                             <x-text-field.currency class="mb-3" name="total_pembayaran" label="Total Pembayaran"
                                 placeholder="Total pembayaran" />
+
+                                <div class="mb-3">
+                                <label for="image" class="form-label">Bukti Pembayaran</label>
+                                <input type="file" name="image" id="image" class="form-control" rows="3" placeholder="Nama Transaksi Keluar"></input>
+                            </div>
 
                             {{-- Catatan --}}
                             <div class="mb-3">
