@@ -28,6 +28,18 @@
                     <label class="form-label">Nama Acara</label>
                     <input disabled value="{{ $pemesanan->acara->nama_acara }}" class="form-control" equired>
                 </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="jam_mulai" class="form-label">Jam Mulai</label>
+                    <input type="time" id="jam_mulai" class="form-control" value="{{ $pemesanan->jam_mulai }}" readonly disabled>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="jam_selesai" class="form-label">Jam Selesai</label>
+                    <input type="time" id="jam_selesai" class="form-control" value="{{ $pemesanan->jam_selesai }}"
+                        readonly disabled>
+                </div>
+
             </div>
             {{-- Catatan --}}
             <div class="mb-3">

@@ -46,6 +46,9 @@ class PemesananController extends Controller
             'tanggal_mulai' => ['required', 'date'],
             'tanggal_selesai' => ['required', 'date'],
 
+            'jam_mulai'       => ['date_format:H:i'],
+            'jam_selesai'     => ['date_format:H:i'],
+
             'total_pembayaran' => ['required', 'numeric', 'min:500'],
             'metode_pembayaran' => ['required'],
             'catatan' => ['nullable'],
@@ -66,6 +69,8 @@ class PemesananController extends Controller
         $pemesanan = Pemesanan::create([
             'nama_pemesan' => $request->nama_pemesan,
             'nomor_telepon' => $request->nomor_telepon,
+            'jam_mulai' => $request->jam_mulai,
+            'jam_selesai' => $request->jam_selesai,
             'acara_id' => $acara->id, // Mengambil acara id yang baru dibuat
             'catatan' => $request->catatan
         ]);
@@ -123,7 +128,9 @@ class PemesananController extends Controller
             'nomor_telepon' => ['nullable'],
             'acara_id' => ['required'],
             'catatan' => ['nullable'],
-            'image' => ['nullable', 'image', 'max:2048'], // validasi gambar
+            'image' => ['nullable', 'image', 'max:2048'],
+            'jam_mulai'       => ['date_format:H:i'],
+            'jam_selesai'     => ['date_format:H:i'],
         ]);
 
         // Ambil data pemesanan
@@ -132,6 +139,8 @@ class PemesananController extends Controller
         // Update data pemesanan
         $pemesanan->update([
             'nama_pemesan' => $request->nama_pemesan,
+            'jam_mulai' => $request->jam_mulai,
+            'jam_selesai' => $request->jam_selesai,
             'nomor_telepon' => $request->nomor_telepon,
             'acara_id' => $request->acara_id,
             'catatan' => $request->catatan,

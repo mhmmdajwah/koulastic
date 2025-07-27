@@ -2,9 +2,22 @@
 
 @section('content')
     <div class="container-fluid px-4">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Terjadi kesalahan!</strong>
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <h1 class="mt-4">Edit Pemesanan</h1>
 
-        <form action="{{ route('pemesanan.update', $pemesanan->id) }}" method="POST" class="card-body card mt-4" enctype="multipart/form-data">
+        <form action="{{ route('pemesanan.update', $pemesanan->id) }}" method="POST" class="card-body card mt-4"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -40,6 +53,18 @@
                     <label for="image" class="form-label">Edit Bukti Pembayaran</label>
                     <input type="file" name="image" id="image" class="form-control">
                 </div>
+                <div class="mb-3 col-md-6">
+                    <label for="jam_mulai" class="form-label">Jam Mulai</label>
+                    <input type="time" name="jam_mulai" id="jam_mulai" class="form-control"
+                        value="{{ old('jam_mulai', \Carbon\Carbon::parse($pemesanan->jam_mulai)->format('H:i')) }}">
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="jam_selesai" class="form-label">Jam Selesai</label>
+                    <input type="time" name="jam_selesai" id="jam_selesai" class="form-control"
+                        value="{{ old('jam_selesai', \Carbon\Carbon::parse($pemesanan->jam_selesai)->format('H:i')) }}">
+                </div>
+
             </div>
             {{-- Catatan --}}
             <div class="mb-3">

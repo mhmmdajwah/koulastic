@@ -52,6 +52,7 @@
                             <th>Sisa Bayar</th>
                             <th>Catatan</th>
                             <th>Tanggal & Waktu</th>
+                            <th>Jama Acara</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -85,6 +86,11 @@
                                 <td>
                                     {{ Carbon\Carbon::parse($pemesanan->created_at)->translatedFormat('d F Y H:i:s') }}
                                 </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($pemesanan->jam_mulai)->format('H:i') }} -
+                                    {{ \Carbon\Carbon::parse($pemesanan->jam_selesai)->format('H:i') }}
+                                </td>
+
                                 <td>
                                     <div class="d-flex flex-wrap gap-2">
                                         @if ($pemesanan->getSisaPembayaran() > 0)
@@ -176,7 +182,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="lokasi" class="form-label">Lokasi</label>
                                 <input type="text" name="lokasi" id="lokasi" class="form-control"
-                                    placeholder="Lokasi" required>
+                                    placeholder="Lokasi">
                             </div>
 
                             {{-- Harga Acara --}}
@@ -197,6 +203,15 @@
                                     required>
                             </div>
 
+                            <div class="mb-3 col-md-6">
+                                <label for="jam_mulai" class="form-label">Jam Mulai</label>
+                                <input type="time" name="jam_mulai" id="jam_mulai" class="form-control">
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="jam_selesai" class="form-label">Jam Selesai</label>
+                                <input type="time" name="jam_selesai" id="jam_selesai" class="form-control">
+                            </div>
+
                             {{-- Total Pembayaran --}}
                             <x-text-field.currency class="mb-3 col-6" name="total_pembayaran" label="Total Pembayaran DP"
                                 placeholder="Total pembayaran DP" />
@@ -204,13 +219,13 @@
                             {{-- Image --}}
                             <div class="mb-3 col-md-12">
                                 <label for="image" class="form-label">Bukti Pembayaran</label>
-                                <input type="file" name="image" id="image" class="form-control" required>
+                                <input type="file" name="image" id="image" class="form-control">
                             </div>
 
                             {{-- Metode Pembayaran --}}
                             <div class="mb-3">
                                 <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
-                                <select required name="metode_pembayaran" id="metode_pembayaran" class="form-control">
+                                <select name="metode_pembayaran" id="metode_pembayaran" class="form-control">
                                     <option value="" selected disabled>-- Pilih Metode Pembayaran --</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Transfer">Transfer Bank</option>
